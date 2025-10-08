@@ -4,6 +4,7 @@ traefik/logs/
 
 # Jenkins persistent data
 jenkins/jenkins_home/
+jenkins/jenkins_agent_home/
 
 # Python/Node artifacts (if any)
 *.pyc
