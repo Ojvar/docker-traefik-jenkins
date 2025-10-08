@@ -1,0 +1,30 @@
+http:
+  middlewares:
+    # BasicAuth protection for the dashboard
+    auth-dashboard:
+      basicAuth:
+        users:
+          # admin:admin (replace with your own, see below)
+          - "admin:$2y$10$mHJTKtUTNY3HXYI52cfsoOVnwGxM.A3D2HqhBD8IqoRhndmc5e54y"
+
+    # Optional HTTP → HTTPS redirect (enable in prod)
+    # redirect-to-https:
+    #   redirectScheme:
+    #     scheme: https
+    #     permanent: true
+
+  routers:
+    traefik-dashboard:
+      rule: "Host(`dashboard.traefik.ojvar.xyz`)"
+      entryPoints:
+        - web
+      service: api@internal
+      middlewares:
+        - auth-dashboard
+      # For production with HTTPS:
+      # entryPoints:
+      #   - websecure
+      # tls: {}
+      # middlewares:
+      #   - redirect-to-https
+      #   - auth-dashboard

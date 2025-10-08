@@ -1,0 +1,24 @@
+# Traefik persistent data
+traefik/data/acme.json
+traefik/logs/
+
+# Jenkins persistent data
+jenkins/jenkins_home/
+
+# Python/Node artifacts (if any)
+*.pyc
+__pycache__/
+node_modules/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker local files
+*.env

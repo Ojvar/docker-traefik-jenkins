@@ -1,0 +1,29 @@
+log:
+  level: DEBUG
+
+api:
+  dashboard: true
+  insecure: true   # disable insecure mode (we’ll expose via router)
+
+entryPoints:
+  web:
+    address: ":80"
+  # websecure:
+  #   address: ":443"
+
+providers:
+  docker:
+    exposedByDefault: false
+    network: public-net
+  file:
+    filename: /etc/traefik/dynamic.yml
+    watch: true
+
+# Enable later for production HTTPS:
+# certificatesResolvers:
+#   le:
+#     acme:
+#       email: "you@example.com"
+#       storage: "/acme.json"
+#       httpChallenge:
+#         entryPoint: "web"
