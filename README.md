@@ -78,13 +78,14 @@ docker swarm init
 
 ## 🔑 Access
 
-| Service                   | URL                                  | Notes                                      |
-| ------------------------- | ------------------------------------ | ------------------------------------------ |
-| Traefik Dashboard         | `http://dashboard.traefik.ojvar.xyz` | Protected by BasicAuth                     |
-| Jenkins                   | `http://jenkins.ojvar.xyz`           | Default Jenkins port 8080 inside container |
-| Traefik (main entrypoint) | `http://traefik.ojvar.xyz`           | Can route other apps via labels            |
+| Service                     | URL                                 | Notes                             |
+|------------------------------|------------------------------------|----------------------------------|
+| Traefik Dashboard             | `http://dashboard.traefik.ojvar.xyz` | Protected by BasicAuth            |
+| Jenkins                       | `http://jenkins.ojvar.xyz`         | Default Jenkins port 8080 inside container |
+| Traefik (main entrypoint)     | `http://traefik.ojvar.xyz`         | Can route other apps via labels   |
 
->BasicAuth credentials for the dashboard are defined in traefik/dynamic.yml. Update as needed.
+> **BasicAuth** credentials for the dashboard are defined in `traefik/dynamic.yml`. Update as needed.
+
 
 ## 🔒 Production Notes
 
