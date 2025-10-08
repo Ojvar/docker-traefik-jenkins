@@ -30,6 +30,27 @@ services:
       - "traefik.http.routers.jenkins.entrypoints=web"
       - "traefik.http.services.jenkins.loadbalancer.server.port=8080"
 
+  jenkins-agent-docker:
+    image: jenkins/inbound-agent:latest
+    environment:
+      JENKINS_URL: "http://jenkins:8080"
+      JENKINS_AGENT_NAME: "docker-agent"
+      JENKINS_SECRET: "fc45027e972a49ca119a3679420a8b00f738ef0fab0967b74197315a44ff9701"  # Set this after creating agent in the jenkins master
+      JENKINS_AGENT_WORKDIR: "/home/jenkins/agent"
+    volumes:
+      - ./jenkins_agent_home:/home/jenkins/agent
+      - /var/run/docker.sock:/var/run/docker.sock   # Optional: access host Docker
+    networks:
+      - public-net
+    deploy:
+      restart_policy:
+        condition: on-failure
+      replicas: 1
+      placement:
+        constraints:
+          #- node.role == worker
+          - node.role == manager
+
 networks:
   public-net:
     external: true
