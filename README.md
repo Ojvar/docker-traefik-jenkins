@@ -23,20 +23,20 @@ It is designed to run on **Manjaro Linux** (or any Linux with Docker Swarm), wit
 
 ## 📂 Project Structure
 
-project-root/
+project-root/  
 │
-├── deploy.sh # Script to start/stop/restart stacks
-├── .gitignore
-├── README.md
-├── traefik/
-│ ├── docker-compose.yml
-│ ├── traefik.yml
-│ ├── dynamic.yml
-│ └── data/
-│ └── acme.json
-└── jenkins/
-├── docker-compose.yml
-└── jenkins_home/
+├── deploy.sh # Script to start/stop/restart stacks  
+├── .gitignore  
+├── README.md  
+├── traefik/  
+│ ├── docker-compose.yml  
+│ ├── traefik.yml  
+│ ├── dynamic.yml  
+│ └── data/  
+│ └── acme.json  
+└── jenkins/  
+├── docker-compose.yml  
+└── jenkins_home/  
 
 ---
 
