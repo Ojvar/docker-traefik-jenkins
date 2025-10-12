@@ -4,10 +4,12 @@ set -euo pipefail
 STACK_PREFIX="ojvar"
 TRAEFIK_STACK="${STACK_PREFIX}-traefik-stack"
 JENKINS_STACK="${STACK_PREFIX}-jenkins-stack"
+POSTGRES_STACK="${STACK_PREFIX}-postgres-stack"
 NETWORK="public-net"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TRAEFIK_DIR="${ROOT_DIR}/traefik"
 JENKINS_DIR="${ROOT_DIR}/jenkins"
+POSTGRES_DIR="${ROOT_DIR}/postgres"
 
 usage() {
   echo "Usage: $0 {start|stop|restart|status}"
@@ -27,6 +29,8 @@ ensure_network() {
 ensure_dirs() {
   mkdir -p "${TRAEFIK_DIR}/data"
   mkdir -p "${JENKINS_DIR}/jenkins_home"
+  mkdir -p "${POSTGRES_DIR}/postgres_data"
+  mkdir -p "${POSTGRES_DIR}/pgadmin_data"
 
   local ACME_FILE="${TRAEFIK_DIR}/data/acme.json"
   if [ ! -f "${ACME_FILE}" ]; then
@@ -41,9 +45,14 @@ deploy_stacks() {
 
   echo "🚀 Deploying Jenkins stack (${JENKINS_STACK})..."
   docker stack deploy -c "${JENKINS_DIR}/docker-compose.yml" "${JENKINS_STACK}"
+
+  echo "🚀 Deploying PostgreSQL stack (${POSTGRES_STACK})..."
+  docker stack deploy -c "${POSTGRES_DIR}/docker-compose.yml" "${POSTGRES_STACK}"
 }
 
 remove_stacks() {
+  echo "🧹 Removing PostgreSQL stack (${POSTGRES_STACK})..."
+  docker stack rm "${POSTGRES_STACK}" || true
   echo "🧹 Removing Jenkins stack (${JENKINS_STACK})..."
   docker stack rm "${JENKINS_STACK}" || true
   echo "🧹 Removing Traefik stack (${TRAEFIK_STACK})..."

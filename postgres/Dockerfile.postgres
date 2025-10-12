@@ -1,0 +1,31 @@
+# Dockerfile.postgres
+FROM postgres:17
+
+# Switch to root for package installation
+USER root
+
+# Install useful extensions and tools
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        postgresql-contrib \
+        curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy custom configuration files
+COPY postgresql.conf /etc/postgresql/postgresql.conf
+COPY pg_hba.conf /etc/postgresql/pg_hba.conf
+
+# Allow overriding default PostgreSQL config at runtime
+# This tells Postgres to use our config file instead of the default
+ENV POSTGRES_INITDB_ARGS="--data-checksums"
+ENV POSTGRES_CONFIG_FILE=/etc/postgresql/postgresql.conf
+
+# Make sure Postgres reads our config on startup
+# Override CMD to point to our custom config
+CMD ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+
+# Expose PostgreSQL port
+EXPOSE 5432
+
+# Switch back to postgres user for runtime
+USER postgres

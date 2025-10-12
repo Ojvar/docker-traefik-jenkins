@@ -8,6 +8,10 @@ services:
         published: 80
         protocol: tcp
         mode: host
+      - target: 5432
+        published: 5432
+        protocol: tcp
+        mode: host
       # For HTTPS in production
       # - target: 443
       #   published: 443

@@ -28,3 +28,5 @@ http:
       # middlewares:
       #   - redirect-to-https
       #   - auth-dashboard
+    
+    # pgadmin router is now defined via Docker labels in postgres/docker-compose.yml

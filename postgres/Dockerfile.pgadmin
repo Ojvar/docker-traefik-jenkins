@@ -1,0 +1,28 @@
+# Dockerfile.pgadmin
+FROM dpage/pgadmin4:latest
+
+# Use root (default) to install tools and manage files
+USER root
+
+# Install additional tools using Alpine package manager
+RUN apk add --no-cache \
+    curl \
+    vim
+
+# Copy custom pgAdmin configuration
+COPY servers.json /pgadmin4/servers.json
+
+# Adjust permissions (no chown to nonexistent user)
+# pgAdmin runs as root in this image by default
+RUN chmod 600 /pgadmin4/servers.json
+
+# Environment variables (can be overridden at runtime)
+ENV PGADMIN_DEFAULT_EMAIL=admin@admin.com
+ENV PGADMIN_DEFAULT_PASSWORD=admin
+ENV PGADMIN_LISTEN_PORT=80
+
+# Expose pgAdmin port
+EXPOSE 80
+
+# Keep default entrypoint & user (root)
+# No USER switch needed
